@@ -1,7 +1,7 @@
-// Webhook for #🎃 | web-shop-logs
+// Discord Webhook for #🎃 | web-shop-logs
 const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1559658470465212457/EX76LajYk-VP6WNa4BvcHq8bQ259rJ9gb7pPOfr9dFjIL1SorqKlNpVqKvTu-NgwnAAG";
 
-// Candies Balance (Shared via localStorage)
+// Candies Balance Engine (Shared via localStorage)
 let balance = parseInt(localStorage.getItem('er_candies')) || 0;
 let selectedItem = null;
 let selectedCost = 0;
@@ -19,9 +19,12 @@ function updateDisplay() {
   localStorage.setItem('er_candies', balance);
   checkDailyTimer();
   checkSpinTimer();
+  checkMemoryTimer();
 }
 
-// Daily Harvest (24h Cooldown)
+// ==========================================
+// 🍬 DAILY HARVEST (24h Cooldown)
+// ==========================================
 function claimDaily() {
   const now = Date.now();
   const lastClaim = localStorage.getItem('er_last_claim');
@@ -67,12 +70,11 @@ function checkDailyTimer() {
 }
 
 // ==========================================
-// 🌀 WHEEL OF SOULS (100% ACCURATE POINTER SYNC)
+// 🌀 WHEEL OF SOULS
 // ==========================================
 let isSpinning = false;
 let currentWheelRotation = 0;
 
-// Order of slices matching style.css (i = 0 to 7)
 const wheelSegments = [
   { index: 0, reward: 0 },
   { index: 1, reward: 15 },
@@ -88,7 +90,7 @@ function spinWheel() {
   if (isSpinning) return;
   const now = Date.now();
   const lastSpin = localStorage.getItem('er_last_spin');
-  const cooldown = 10 * 60 * 1000;
+  const cooldown = 10 * 60 * 1000; // 10 minutes
 
   if (lastSpin && (now - lastSpin) < cooldown) return;
 
@@ -96,13 +98,10 @@ function spinWheel() {
   const spinBtn = document.getElementById('spinBtn');
   if (spinBtn) spinBtn.disabled = true;
 
-  // Pick target segment (0 to 7)
   const targetIndex = Math.floor(Math.random() * wheelSegments.length);
   const targetSegment = wheelSegments[targetIndex];
 
-  // Calculate rotation angle to bring slice directly under top arrow
   const targetNormalizedAngle = (360 - (targetIndex * 45 + 22.5)) % 360;
-  
   const extraFullSpins = 360 * 6;
   const currentNormalized = currentWheelRotation % 360;
   let delta = targetNormalizedAngle - currentNormalized;
@@ -118,7 +117,7 @@ function spinWheel() {
     localStorage.setItem('er_last_spin', Date.now());
     updateDisplay();
     if (targetSegment.reward === 0) {
-      alert(`💀 Bad luck! The cursed wheel gave you 0 candies this time.`);
+      alert('💀 Bad luck! The cursed wheel gave you 0 candies this time.');
     } else {
       alert(`🎉 The Cursed Wheel granted you +${targetSegment.reward} Soul Candies!`);
     }
@@ -155,7 +154,160 @@ function checkSpinTimer() {
   }
 }
 
-// Floating Ghost Game
+// ==========================================
+// 🃏 MEMORY CARD MATCH (WITH ANTI-CHEAT SHUFFLE)
+// ==========================================
+const memoryIcons = ['🎃', '👻', '🧙‍♀️', '💀'];
+let cardState = [];
+let flippedIndices = [];
+let matchedPairs = 0;
+let isMemoryActive = false;
+let isEvaluating = false;
+
+function initMemoryGame() {
+  const now = Date.now();
+  const lastPlayed = localStorage.getItem('er_last_memory');
+  const cooldown = 5 * 60 * 1000; // 5 min cooldown
+
+  if (lastPlayed && (now - lastPlayed) < cooldown) return;
+
+  flippedIndices = [];
+  matchedPairs = 0;
+  isMemoryActive = true;
+  isEvaluating = false;
+
+  const rawIcons = [...memoryIcons, ...memoryIcons].sort(() => Math.random() - 0.5);
+  cardState = rawIcons.map((icon, idx) => ({
+    id: idx,
+    icon: icon,
+    matched: false
+  }));
+
+  renderMemoryGrid();
+
+  const btn = document.getElementById('memoryBtn');
+  if (btn) btn.disabled = true;
+}
+
+function renderMemoryGrid() {
+  const grid = document.getElementById('memoryGrid');
+  if (!grid) return;
+  grid.innerHTML = '';
+
+  cardState.forEach((item, index) => {
+    const card = document.createElement('div');
+    card.classList.add('memory-card');
+    card.dataset.index = index;
+
+    if (item.matched) {
+      card.classList.add('matched');
+      card.innerText = item.icon;
+    } else if (flippedIndices.includes(index)) {
+      card.classList.add('flipped');
+      card.innerText = item.icon;
+    } else {
+      card.innerText = '❓';
+    }
+
+    card.onclick = () => handleMemoryClick(index);
+    grid.appendChild(card);
+  });
+}
+
+function handleMemoryClick(index) {
+  if (!isMemoryActive || isEvaluating) return;
+  if (cardState[index].matched || flippedIndices.includes(index)) return;
+
+  flippedIndices.push(index);
+  renderMemoryGrid();
+
+  if (flippedIndices.length === 2) {
+    isEvaluating = true;
+    const [firstIdx, secondIdx] = flippedIndices;
+    const card1 = cardState[firstIdx];
+    const card2 = cardState[secondIdx];
+
+    if (card1.icon === card2.icon) {
+      card1.matched = true;
+      card2.matched = true;
+      matchedPairs++;
+      flippedIndices = [];
+      isEvaluating = false;
+      renderMemoryGrid();
+
+      if (matchedPairs === 4) {
+        setTimeout(() => {
+          balance += 50;
+          localStorage.setItem('er_last_memory', Date.now());
+          updateDisplay();
+          alert('🎉 Spooky Pairs Cleared! +50 Soul Candies added!');
+          isMemoryActive = false;
+        }, 300);
+      }
+    } else {
+      setTimeout(() => {
+        flippedIndices = [];
+        shuffleUnmatchedCards();
+        isEvaluating = false;
+        renderMemoryGrid();
+      }, 900);
+    }
+  }
+}
+
+function shuffleUnmatchedCards() {
+  const unmatchedIndices = [];
+  const unmatchedValues = [];
+
+  cardState.forEach((item, idx) => {
+    if (!item.matched) {
+      unmatchedIndices.push(idx);
+      unmatchedValues.push(item.icon);
+    }
+  });
+
+  unmatchedValues.sort(() => Math.random() - 0.5);
+
+  unmatchedIndices.forEach((gridIdx, i) => {
+    cardState[gridIdx].icon = unmatchedValues[i];
+  });
+}
+
+function checkMemoryTimer() {
+  const lastPlayed = localStorage.getItem('er_last_memory');
+  const btn = document.getElementById('memoryBtn');
+  const timerText = document.getElementById('memoryTimerText');
+  if (!btn || !timerText) return;
+
+  const cooldown = 5 * 60 * 1000;
+  if (!lastPlayed) {
+    if (!isMemoryActive) {
+      btn.disabled = false;
+      btn.innerText = "Start Match 🃏";
+    }
+    timerText.innerText = "";
+    return;
+  }
+
+  const diff = Date.now() - lastPlayed;
+  if (diff < cooldown) {
+    btn.disabled = true;
+    const mins = Math.floor((cooldown - diff) / 60000);
+    const secs = Math.floor(((cooldown - diff) % 60000) / 1000);
+    btn.innerText = "Locked ⏳";
+    timerText.innerText = `Next match in: ${mins}m${secs}s`;
+  } else {
+    if (!isMemoryActive) {
+      btn.disabled = false;
+      btn.innerText = "Start Match 🃏";
+    }
+    timerText.innerText = "Ready to play!";
+  }
+}
+
+// ==========================================
+// 👻 GHOST CLICKER
+// ==========================================
 function spawnGhost() {
   const ghost = document.getElementById('spookyGhost');
   if (!ghost) return;
@@ -187,7 +339,9 @@ function scheduleNextGhost() {
   setTimeout(spawnGhost, delay);
 }
 
-// Shop & Unique User Webhook Logging
+// ==========================================
+// 🛒 SHOP & WEBHOOK PURCHASE LOGGING
+// ==========================================
 function startPurchase(name, cost) {
   if (balance < cost) {
     alert(`Not enough candies! You need ${cost - balance} more.`);
@@ -209,12 +363,11 @@ function confirmRedeem() {
   balance -= selectedCost;
   updateDisplay();
 
-  // Generate Unique Verification Code per User
   const cleanUser = username.replace(/[^a-zA-Z0-9]/g, '').toUpperCase().substring(0, 5) || "USER";
   const rand = Math.random().toString(36).substring(2, 7).toUpperCase();
   const uniqueCode = `ER-${cleanUser}-${rand}`;
 
-  // Direct Log to Discord Webhook
+  // Log to Discord Webhook
   fetch(DISCORD_WEBHOOK_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -231,7 +384,7 @@ function confirmRedeem() {
           { name: "🔑 Unique Verification Ticket", value: `\`\`\`${uniqueCode}\`\`\``, inline: false },
           { name: "🕒 Log Timestamp", value: new Date().toUTCString(), inline: false }
         ],
-        footer: { text: "Verify this exact ticket code in your staff ticket panel." }
+        footer: { text: "Verify this ticket code in staff logs." }
       }]
     })
   }).catch(err => console.log('Webhook logging error:', err));
@@ -242,7 +395,9 @@ function confirmRedeem() {
   document.getElementById('voucherModal').classList.add('active');
 }
 
-// Promo Code
+// ==========================================
+// 🎁 PROMO CODE
+// ==========================================
 function redeemPromo() {
   const input = document.getElementById('promoInput');
   const msg = document.getElementById('promoMsg');
@@ -277,12 +432,14 @@ function closeModal(id) {
   if (el) el.classList.remove('active');
 }
 
-// Init
+// Auto Init on Page Load
 window.addEventListener('DOMContentLoaded', () => {
   updateDisplay();
   scheduleNextGhost();
   setInterval(() => {
     checkDailyTimer();
     checkSpinTimer();
+    checkMemoryTimer();
   }, 1000);
 });
+    
