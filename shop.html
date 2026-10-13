@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Soul Shop | Ethereal Radiance</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div id="spookyGhost" onclick="catchGhost()">👻</div>
+
+  <div class="wrapper">
+    <nav>
+      <a href="index.html" class="brand-area">
+        <span class="pumpkin-icon">🎃</span>
+        <div class="brand-title">ETHEREAL VAULT</div>
+      </a>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">Games</a>
+        <a href="shop.html" class="nav-link active">Shop</a>
+        <a href="events.html" class="nav-link">Events</a>
+      </div>
+      <div class="coin-badge">
+        <span>🍬 Candies:</span>
+        <span class="coin-amount" id="coinBalance">0</span>
+      </div>
+    </nav>
+
+    <div class="card">
+      <span class="tag">VERIFIED MARKET</span>
+      <h2>Spooky Soul Exchange</h2>
+      <p>Spend your earned Soul Candies on verified roles, giveaway tickets, and raid carries. All redemptions are instantly logged to staff via Discord Webhook with unique codes.</p>
+    </div>
+
+    <div class="grid-3">
+      <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+          <span style="font-weight: 800; color: #ff9d42; font-size: 0.95rem;">🍬 250 Candies</span>
+          <h3 style="font-family: 'Cinzel'; margin: 8px 0 4px;">Phantom Raider Role</h3>
+          <p>Exclusive purple glowing role in the official Ethereal Radiance Discord.</p>
+        </div>
+        <button class="btn btn-pumpkin" style="margin-top: 1rem;" onclick="startPurchase('Phantom Raider Role', 250)">Redeem Role</button>
+      </div>
+
+      <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+          <span style="font-weight: 800; color: #ff9d42; font-size: 0.95rem;">🍬 500 Candies</span>
+          <h3 style="font-family: 'Cinzel'; margin: 8px 0 4px;">Halloween VIP Ticket</h3>
+          <p>Priority VIP entry ticket for upcoming Robux, Gamepass, and Fruit giveaways.</p>
+        </div>
+        <button class="btn btn-pumpkin" style="margin-top: 1rem;" onclick="startPurchase('Halloween VIP Ticket', 500)">Redeem Ticket</button>
+      </div>
+
+      <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+          <span style="font-weight: 800; color: #ff9d42; font-size: 0.95rem;">🍬 750 Candies</span>
+          <h3 style="font-family: 'Cinzel'; margin: 8px 0 4px;">Priority Raid Carry</h3>
+          <p>Guaranteed priority dungeon/boss clear carry voucher with guild Hashiras.</p>
+        </div>
+        <button class="btn btn-pumpkin" style="margin-top: 1rem;" onclick="startPurchase('Priority Raid Carry', 750)">Redeem Carry</button>
+      </div>
+    </div>
+
+    <footer>
+      <p>© 2026 Ethereal Radiance. Engineered by <strong>Mikey's Studio</strong></p>
+    </footer>
+  </div>
+
+  <!-- Buy Modal -->
+  <div class="modal-overlay" id="buyModal">
+    <div class="modal-box">
+      <h2 style="font-size: 1.25rem;">Confirm Purchase</h2>
+      <p id="buyItemDesc" style="margin-top: 6px;"></p>
+      <div style="margin: 1.1rem 0; text-align: left;">
+        <label style="font-size: 0.78rem; color: #a39ea9; display: block; margin-bottom: 5px;">Your Discord Username:</label>
+        <input type="text" id="discordUser" class="promo-input" style="width: 100%; text-transform: none;" placeholder="e.g. Mikey_77">
+      </div>
+      <div style="display: flex; gap: 8px; justify-content: center;">
+        <button class="btn btn-pumpkin" onclick="confirmRedeem()">Confirm & Send Log</button>
+        <button class="btn" style="background: rgba(255,255,255,0.08); color: #fff;" onclick="closeModal('buyModal')">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Unique Voucher Code Modal -->
+  <div class="modal-overlay" id="voucherModal">
+    <div class="modal-box">
+      <h2 style="font-size: 1.3rem;">🎉 Item Verified & Logged!</h2>
+      <p id="claimedItemName" style="margin-top: 6px;"></p>
+      <p style="margin-top: 10px; font-size: 0.8rem;">This purchase was logged to staff. Open a Discord ticket and send this unique ticket code to claim your reward:</p>
+      <div class="voucher-code" id="voucherCodeText">ER-USER-XXXX</div>
+      <button class="btn btn-pumpkin" onclick="closeModal('voucherModal')">Close</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

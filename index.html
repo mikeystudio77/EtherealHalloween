@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Halloween Vault | Ethereal Radiance</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div id="spookyGhost" onclick="catchGhost()">👻</div>
+
+  <div class="wrapper">
+    <nav>
+      <a href="index.html" class="brand-area">
+        <span class="pumpkin-icon">🎃</span>
+        <div class="brand-title">ETHEREAL VAULT</div>
+      </a>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link active">Games</a>
+        <a href="shop.html" class="nav-link">Shop</a>
+        <a href="events.html" class="nav-link">Events</a>
+      </div>
+      <div class="coin-badge">
+        <span>🍬 Candies:</span>
+        <span class="coin-amount" id="coinBalance">0</span>
+      </div>
+    </nav>
+
+    <div class="grid-2">
+      <!-- Mini-Game: Wheel of Souls -->
+      <div class="card" style="text-align: center;">
+        <span class="tag">MINI-GAME</span>
+        <h2>Lucky Wheel of Souls</h2>
+        <p>Spin the cursed wheel to claim random candies (Up to 150 Jackpot!). Available every 10 minutes.</p>
+        
+        <div class="wheel-container">
+          <div class="wheel-arrow"></div>
+          <div class="wheel-box" id="wheelBox">
+            <div class="wheel-text" style="--i: 0;">0</div>
+            <div class="wheel-text" style="--i: 1;">15</div>
+            <div class="wheel-text" style="--i: 2;">30</div>
+            <div class="wheel-text" style="--i: 3;">50</div>
+            <div class="wheel-text" style="--i: 4;">75</div>
+            <div class="wheel-text" style="--i: 5;">100</div>
+            <div class="wheel-text" style="--i: 6;">125</div>
+            <div class="wheel-text" style="--i: 7;">150</div>
+            <div class="wheel-center-orb">💀</div>
+          </div>
+          <button id="spinBtn" class="btn btn-pumpkin" onclick="spinWheel()">Spin Wheel 🌀</button>
+          <p id="spinTimerText" style="font-size: 0.75rem; color: #ff9d42; margin-top: 5px;"></p>
+        </div>
+      </div>
+
+      <!-- Daily Harvest & Promo Codes -->
+      <div class="card">
+        <span class="tag">DAILY HARVEST</span>
+        <h2>Trick or Treat Chest</h2>
+        <p>Collect your free 100 daily harvest candies to build up your bank for the Halloween Shop.</p>
+        <button id="dailyBtn" class="btn btn-pumpkin" style="margin-top: 1.1rem;" onclick="claimDaily()">Harvest 100 🍬</button>
+        <p id="timerText" style="margin-top: 8px; font-size: 0.75rem; color: #ff9d42;"></p>
+
+        <div style="margin-top: 1.8rem; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 1rem;">
+          <span class="tag" style="color: var(--phantom); border-color: rgba(168,85,247,0.3); background: rgba(168,85,247,0.1);">SECRET DROP</span>
+          <p>Redeem limited promo codes announced on Discord:</p>
+          <div class="promo-box">
+            <input type="text" id="promoInput" class="promo-input" placeholder="Get it on Discord">
+            <button class="btn-phantom" onclick="redeemPromo()">Redeem</button>
+          </div>
+          <p id="promoMsg" style="margin-top: 6px; font-size: 0.75rem;"></p>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>© 2026 Ethereal Radiance. Engineered by <strong>Mikey's Studio</strong></p>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
