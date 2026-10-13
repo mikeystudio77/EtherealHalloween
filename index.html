@@ -30,8 +30,9 @@
       </div>
     </nav>
 
+    <!-- Mini-Games Grid -->
     <div class="grid-2">
-      <!-- Mini-Game: Wheel of Souls -->
+      <!-- Mini-Game 1: Wheel of Souls -->
       <div class="card" style="text-align: center;">
         <span class="tag">MINI-GAME</span>
         <h2>Lucky Wheel of Souls</h2>
@@ -55,17 +56,36 @@
         </div>
       </div>
 
-      <!-- Daily Harvest & Promo Codes -->
-      <div class="card">
-        <span class="tag">DAILY HARVEST</span>
-        <h2>Trick or Treat Chest</h2>
-        <p>Collect your free 100 daily harvest candies to build up your bank for the Halloween Shop.</p>
-        <button id="dailyBtn" class="btn btn-pumpkin" style="margin-top: 1.1rem;" onclick="claimDaily()">Harvest 100 🍬</button>
-        <p id="timerText" style="margin-top: 8px; font-size: 0.75rem; color: #ff9d42;"></p>
+      <!-- Mini-Game 2: Spooky Memory Card Match -->
+      <div class="card" style="text-align: center;">
+        <span class="tag" style="color: var(--phantom); border-color: rgba(168,85,247,0.3); background: rgba(168,85,247,0.1);">NEW GAME</span>
+        <h2>Spooky Card Match</h2>
+        <p>Match all 4 spooky pairs to win 50 bonus candies! Playable every 5 minutes.</p>
 
-        <div style="margin-top: 1.8rem; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 1rem;">
+        <div class="memory-grid" id="memoryGrid">
+          <!-- Cards rendered by script.js -->
+        </div>
+
+        <button id="memoryBtn" class="btn btn-pumpkin" onclick="initMemoryGame()">Start Match 🃏</button>
+        <p id="memoryTimerText" style="font-size: 0.75rem; color: #ff9d42; margin-top: 5px;"></p>
+      </div>
+    </div>
+
+    <!-- Daily Harvest & Secret Codes -->
+    <div class="card">
+      <div class="grid-2" style="align-items: center;">
+        <div>
+          <span class="tag">DAILY HARVEST</span>
+          <h2>Trick or Treat Chest</h2>
+          <p>Collect your free 100 daily harvest candies to exchange for official MistCoins and exclusive roles.</p>
+          <button id="dailyBtn" class="btn btn-pumpkin" style="margin-top: 0.8rem;" onclick="claimDaily()">Harvest 100 🍬</button>
+          <p id="timerText" style="margin-top: 8px; font-size: 0.75rem; color: #ff9d42;"></p>
+        </div>
+
+        <div style="border-left: 1px solid rgba(255,255,255,0.08); padding-left: 1.2rem;">
           <span class="tag" style="color: var(--phantom); border-color: rgba(168,85,247,0.3); background: rgba(168,85,247,0.1);">SECRET DROP</span>
-          <p>Redeem limited promo codes announced on Discord:</p>
+          <h3 style="font-family: 'Cinzel'; margin-bottom: 4px;">Redeem Discord Code</h3>
+          <p>Enter promo drops from announcements:</p>
           <div class="promo-box">
             <input type="text" id="promoInput" class="promo-input" placeholder="Get it on Discord">
             <button class="btn-phantom" onclick="redeemPromo()">Redeem</button>
@@ -82,4 +102,5 @@
 
   <script src="script.js"></script>
 </body>
-</html>
+  </html>
+  
