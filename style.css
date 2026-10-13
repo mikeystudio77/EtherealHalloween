@@ -67,7 +67,6 @@ nav {
   text-decoration: none;
 }
 
-/* Extra Glowing Pumpkin Icon */
 .pumpkin-icon {
   font-size: 1.5rem;
   filter: drop-shadow(0 0 14px #ff6b00) drop-shadow(0 0 24px #ff8c00);
@@ -118,7 +117,6 @@ nav {
   box-shadow: 0 0 20px rgba(255, 107, 0, 0.65);
 }
 
-/* Glowing Coin Badge */
 .coin-badge {
   display: inline-flex;
   align-items: center;
@@ -230,9 +228,7 @@ p {
   transform: none;
 }
 
-/* ==========================================
-   WHEEL COMPONENT (PERFECT CENTER ALIGNMENT)
-============================================= */
+/* Wheel */
 .wheel-container {
   display: flex;
   flex-direction: column;
@@ -276,7 +272,6 @@ p {
   filter: drop-shadow(0 0 8px #ff6b00);
 }
 
-/* Slices ke numbers exact circular position mein */
 .wheel-text {
   position: absolute;
   top: 50%;
@@ -297,7 +292,6 @@ p {
   transform: rotate(calc(var(--i) * 45deg + 22.5deg)) translateY(-62px) rotate(calc(var(--i) * -45deg - 22.5deg));
 }
 
-/* Skull center orb dead-center */
 .wheel-center-orb {
   position: absolute;
   top: 50%;
@@ -316,7 +310,50 @@ p {
   box-shadow: 0 0 16px rgba(255, 107, 0, 0.6);
 }
 
-/* Floating Ghost Mini-Game */
+/* ==========================================
+   MEMORY GAME (FLIP CARDS)
+============================================= */
+.memory-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin: 1.2rem 0;
+}
+
+.memory-card {
+  aspect-ratio: 1 / 1;
+  background: #14101c;
+  border: 2px solid rgba(255, 107, 0, 0.3);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.memory-card:hover {
+  border-color: var(--pumpkin);
+  transform: translateY(-2px);
+}
+
+.memory-card.flipped {
+  background: rgba(255, 107, 0, 0.15);
+  border-color: var(--pumpkin);
+  box-shadow: 0 0 15px rgba(255, 107, 0, 0.4);
+}
+
+.memory-card.matched {
+  background: rgba(168, 85, 247, 0.2);
+  border-color: var(--phantom);
+  box-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
+  cursor: default;
+}
+
+/* Ghost Clicker */
 #spookyGhost {
   position: fixed;
   font-size: 2.3rem;
@@ -348,7 +385,6 @@ p {
   color: #fff;
   outline: none;
   font-size: 0.85rem;
-  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.5);
 }
 
 .promo-input:focus {
@@ -365,10 +401,6 @@ p {
   font-weight: 700;
   cursor: pointer;
   box-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
-}
-
-.btn-phantom:hover {
-  box-shadow: 0 0 22px rgba(168, 85, 247, 0.7);
 }
 
 /* Modals */
@@ -416,4 +448,5 @@ footer {
   font-size: 0.8rem;
   color: var(--text-muted);
   margin-top: 1rem;
-}
+  }
+  
