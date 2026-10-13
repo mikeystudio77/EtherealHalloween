@@ -30,38 +30,103 @@
       </div>
     </nav>
 
+    <!-- Header Banner -->
     <div class="card">
-      <span class="tag">VERIFIED MARKET</span>
-      <h2>Spooky Soul Exchange</h2>
-      <p>Spend your earned Soul Candies on verified roles, giveaway tickets, and raid carries. All redemptions are instantly logged to staff via Discord Webhook with unique codes.</p>
+      <span class="tag">OFFICIAL MISTBOT EXCHANGE</span>
+      <h2>Halloween Mistbot Shop</h2>
+      <p>Convert your Soul Candies directly into <strong>MistCoins</strong> (500 Candies = 25 MistCoins) or unlock permanent Halloween profile roles and giveaway privileges. All purchases generate verified logs sent to staff.</p>
     </div>
 
+    <!-- Shop Grid -->
     <div class="grid-3">
-      <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+      <!-- 1. MistCoin Direct Voucher -->
+      <div class="card" style="display: flex; flex-direction: column; justify-content: space-between; border-color: rgba(168, 85, 247, 0.45);">
         <div>
-          <span style="font-weight: 800; color: #ff9d42; font-size: 0.95rem;">🍬 250 Candies</span>
-          <h3 style="font-family: 'Cinzel'; margin: 8px 0 4px;">Phantom Raider Role</h3>
-          <p>Exclusive purple glowing role in the official Ethereal Radiance Discord.</p>
+          <span style="font-weight: 800; color: #a855f7; font-size: 0.95rem;">🍬 500 Candies</span>
+          <h3 style="font-family: 'Cinzel'; margin: 8px 0 4px;">🪙 25 MistCoins</h3>
+          <p>Exchange candies for direct server currency added to your Mistbot balance.</p>
         </div>
-        <button class="btn btn-pumpkin" style="margin-top: 1rem;" onclick="startPurchase('Phantom Raider Role', 250)">Redeem Role</button>
+        <button class="btn btn-pumpkin" style="margin-top: 1rem;" onclick="startPurchase('25 MistCoins Voucher', 500)">Claim Coins</button>
       </div>
 
+      <!-- 2. Witch's Favorite -->
       <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
         <div>
-          <span style="font-weight: 800; color: #ff9d42; font-size: 0.95rem;">🍬 500 Candies</span>
-          <h3 style="font-family: 'Cinzel'; margin: 8px 0 4px;">Halloween VIP Ticket</h3>
-          <p>Priority VIP entry ticket for upcoming Robux, Gamepass, and Fruit giveaways.</p>
+          <span style="font-weight: 800; color: #ff9d42; font-size: 0.95rem;">🍬 500 Candies (25 MC)</span>
+          <h3 style="font-family: 'Cinzel'; margin: 8px 0 4px;">🧙‍♀️ Witch's Favorite</h3>
+          <p>Permanent exclusive Halloween vanity profile role.</p>
         </div>
-        <button class="btn btn-pumpkin" style="margin-top: 1rem;" onclick="startPurchase('Halloween VIP Ticket', 500)">Redeem Ticket</button>
+        <button class="btn btn-pumpkin" style="margin-top: 1rem;" onclick="startPurchase('Witch\'s Favorite Role', 500)">Claim Role</button>
       </div>
 
+      <!-- 3. Sweet Treat -->
       <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
         <div>
-          <span style="font-weight: 800; color: #ff9d42; font-size: 0.95rem;">🍬 750 Candies</span>
-          <h3 style="font-family: 'Cinzel'; margin: 8px 0 4px;">Priority Raid Carry</h3>
-          <p>Guaranteed priority dungeon/boss clear carry voucher with guild Hashiras.</p>
+          <span style="font-weight: 800; color: #ff9d42; font-size: 0.95rem;">🍬 500 Candies (25 MC)</span>
+          <h3 style="font-family: 'Cinzel'; margin: 8px 0 4px;">🍭 Sweet Treat</h3>
+          <p>Permanent festive Halloween vanity profile role.</p>
         </div>
-        <button class="btn btn-pumpkin" style="margin-top: 1rem;" onclick="startPurchase('Priority Raid Carry', 750)">Redeem Carry</button>
+        <button class="btn btn-pumpkin" style="margin-top: 1rem;" onclick="startPurchase('Sweet Treat Role', 500)">Claim Role</button>
+      </div>
+
+      <!-- 4. Ghostly Guest -->
+      <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+          <span style="font-weight: 800; color: #ff9d42; font-size: 0.95rem;">🍬 500 Candies (25 MC)</span>
+          <h3 style="font-family: 'Cinzel'; margin: 8px 0 4px;">👻 Ghostly Guest</h3>
+          <p>Permanent phantom ghost vanity profile role.</p>
+        </div>
+        <button class="btn btn-pumpkin" style="margin-top: 1rem;" onclick="startPurchase('Ghostly Guest Role', 500)">Claim Role</button>
+      </div>
+
+      <!-- 5. Haunted Soul -->
+      <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+          <span style="font-weight: 800; color: #ff9d42; font-size: 0.95rem;">🍬 500 Candies (25 MC)</span>
+          <h3 style="font-family: 'Cinzel'; margin: 8px 0 4px;">🕸️ Haunted Soul</h3>
+          <p>Permanent eerie gothic vanity profile role.</p>
+        </div>
+        <button class="btn btn-pumpkin" style="margin-top: 1rem;" onclick="startPurchase('Haunted Soul Role', 500)">Claim Role</button>
+      </div>
+
+      <!-- 6. Pumpkin Reaper -->
+      <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+          <span style="font-weight: 800; color: #ff9d42; font-size: 0.95rem;">🍬 500 Candies (25 MC)</span>
+          <h3 style="font-family: 'Cinzel'; margin: 8px 0 4px;">🎃 Pumpkin Reaper</h3>
+          <p>Permanent elite harvest reaper vanity profile role.</p>
+        </div>
+        <button class="btn btn-pumpkin" style="margin-top: 1rem;" onclick="startPurchase('Pumpkin Reaper Role', 500)">Claim Role</button>
+      </div>
+
+      <!-- 7. Cursed Luck -->
+      <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+          <span style="font-weight: 800; color: #ff9d42; font-size: 0.95rem;">🍬 800 Candies (40 MC)</span>
+          <h3 style="font-family: 'Cinzel'; margin: 8px 0 4px;">🎃 Cursed Luck</h3>
+          <p>Permanent role: Grants <strong>+1 extra giveaway entry</strong> for all Halloween events.</p>
+        </div>
+        <button class="btn btn-pumpkin" style="margin-top: 1rem;" onclick="startPurchase('Cursed Luck (+1 GW Entry)', 800)">Claim Role</button>
+      </div>
+
+      <!-- 8. Phantom Pass -->
+      <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+          <span style="font-weight: 800; color: #ff9d42; font-size: 0.95rem;">🍬 800 Candies (40 MC)</span>
+          <h3 style="font-family: 'Cinzel'; margin: 8px 0 4px;">💀 Phantom Pass</h3>
+          <p>Permanent role: <strong>Bypass giveaway requirements</strong> on all server events.</p>
+        </div>
+        <button class="btn btn-pumpkin" style="margin-top: 1rem;" onclick="startPurchase('Phantom Pass (GW Bypass)', 800)">Claim Role</button>
+      </div>
+
+      <!-- 9. Halloween VIP -->
+      <div class="card" style="display: flex; flex-direction: column; justify-content: space-between; border-color: rgba(255, 107, 0, 0.65);">
+        <div>
+          <span style="font-weight: 800; color: #ff9d42; font-size: 0.95rem;">🍬 2000 Candies (100 MC)</span>
+          <h3 style="font-family: 'Cinzel'; margin: 8px 0 4px;">👻 Halloween VIP</h3>
+          <p>Ultimate permanent role: Grants <strong>+3 extra giveaway entries</strong> for all Halloween events.</p>
+        </div>
+        <button class="btn btn-pumpkin" style="margin-top: 1rem;" onclick="startPurchase('Halloween VIP (+3 GW Entries)', 2000)">Claim VIP</button>
       </div>
     </div>
 
@@ -99,4 +164,5 @@
 
   <script src="script.js"></script>
 </body>
-</html>
+      </html>
+            
