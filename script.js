@@ -1,4 +1,4 @@
-// Discord Webhook for #🎃 | web-shop-logs
+// Webhook for #🎃 | web-shop-logs
 const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1559658470465212457/EX76LajYk-VP6WNa4BvcHq8bQ259rJ9gb7pPOfr9dFjIL1SorqKlNpVqKvTu-NgwnAAG";
 
 // Candies Balance Engine (Shared via localStorage)
@@ -16,30 +16,36 @@ const testPromoCodes = {
 function updateDisplay() {
   const badge = document.getElementById('coinBalance');
   if (badge) badge.innerText = balance;
-  localStorage.setItem('er_candies', balance);
+  localStorage.setItem('er_candies', balance.toString());
   checkDailyTimer();
   checkSpinTimer();
   checkMemoryTimer();
 }
 
 // ==========================================
-// 🍬 DAILY HARVEST (24h Cooldown)
+// 🍬 DAILY HARVEST (EXPLOIT & RELOAD PROOF)
 // ==========================================
 function claimDaily() {
   const now = Date.now();
-  const lastClaim = localStorage.getItem('er_last_claim');
+  const lastClaim = parseInt(localStorage.getItem('er_last_claim')) || 0;
   const cooldown = 24 * 60 * 60 * 1000;
 
-  if (!lastClaim || (now - lastClaim) > cooldown) {
-    balance += 100;
-    localStorage.setItem('er_last_claim', now);
-    updateDisplay();
-    alert('🎃 BOO! 100 Soul Candies added to your pouch!');
+  // Strict check: cooldown active toh block
+  if (lastClaim && (now - lastClaim) < cooldown) {
+    alert('⏳ Daily harvest already claimed! Please wait for cooldown.');
+    checkDailyTimer();
+    return;
   }
+
+  // Pehle lock state save karo
+  localStorage.setItem('er_last_claim', now.toString());
+  balance += 100;
+  updateDisplay();
+  alert('🎃 BOO! 100 Soul Candies added to your pouch!');
 }
 
 function checkDailyTimer() {
-  const lastClaim = localStorage.getItem('er_last_claim');
+  const lastClaim = parseInt(localStorage.getItem('er_last_claim')) || 0;
   const btn = document.getElementById('dailyBtn');
   const timerText = document.getElementById('timerText');
   if (!btn || !timerText) return;
@@ -70,6 +76,46 @@ function checkDailyTimer() {
 }
 
 // ==========================================
+// 🎁 PROMO CODE (STRICT DUPLICATE LOCK)
+// ==========================================
+function redeemPromo() {
+  const input = document.getElementById('promoInput');
+  const msg = document.getElementById('promoMsg');
+  if (!input || !msg) return;
+
+  const code = input.value.trim().toUpperCase();
+  if (!code) return;
+
+  let redeemed = [];
+  try {
+    redeemed = JSON.parse(localStorage.getItem('er_redeemed_promos')) || [];
+  } catch (e) {
+    redeemed = [];
+  }
+
+  // Reload exploit lock: already claimed check
+  if (redeemed.includes(code)) {
+    msg.style.color = '#ef4444';
+    msg.innerText = 'Code already redeemed on this browser!';
+    return;
+  }
+
+  if (testPromoCodes[code]) {
+    const reward = testPromoCodes[code];
+    redeemed.push(code);
+    localStorage.setItem('er_redeemed_promos', JSON.stringify(redeemed));
+    balance += reward;
+    updateDisplay();
+    msg.style.color = '#22c55e';
+    msg.innerText = `+${reward} Candies added!`;
+    input.value = '';
+  } else {
+    msg.style.color = '#ef4444';
+    msg.innerText = 'Invalid secret code!';
+  }
+}
+
+// ==========================================
 // 🌀 WHEEL OF SOULS
 // ==========================================
 let isSpinning = false;
@@ -89,10 +135,14 @@ const wheelSegments = [
 function spinWheel() {
   if (isSpinning) return;
   const now = Date.now();
-  const lastSpin = localStorage.getItem('er_last_spin');
-  const cooldown = 10 * 60 * 1000; // 10 minutes
+  const lastSpin = parseInt(localStorage.getItem('er_last_spin')) || 0;
+  const cooldown = 10 * 60 * 1000;
 
-  if (lastSpin && (now - lastSpin) < cooldown) return;
+  if (lastSpin && (now - lastSpin) < cooldown) {
+    alert('⏳ Wheel is cooling down!');
+    checkSpinTimer();
+    return;
+  }
 
   isSpinning = true;
   const spinBtn = document.getElementById('spinBtn');
@@ -114,7 +164,7 @@ function spinWheel() {
 
   setTimeout(() => {
     balance += targetSegment.reward;
-    localStorage.setItem('er_last_spin', Date.now());
+    localStorage.setItem('er_last_spin', Date.now().toString());
     updateDisplay();
     if (targetSegment.reward === 0) {
       alert('💀 Bad luck! The cursed wheel gave you 0 candies this time.');
@@ -127,7 +177,7 @@ function spinWheel() {
 
 function checkSpinTimer() {
   if (isSpinning) return;
-  const lastSpin = localStorage.getItem('er_last_spin');
+  const lastSpin = parseInt(localStorage.getItem('er_last_spin')) || 0;
   const btn = document.getElementById('spinBtn');
   const timerText = document.getElementById('spinTimerText');
   if (!btn || !timerText) return;
@@ -155,7 +205,7 @@ function checkSpinTimer() {
 }
 
 // ==========================================
-// 🃏 MEMORY CARD MATCH (WITH ANTI-CHEAT SHUFFLE)
+// 🃏 MEMORY CARD MATCH
 // ==========================================
 const memoryIcons = ['🎃', '👻', '🧙‍♀️', '💀'];
 let cardState = [];
@@ -166,10 +216,14 @@ let isEvaluating = false;
 
 function initMemoryGame() {
   const now = Date.now();
-  const lastPlayed = localStorage.getItem('er_last_memory');
-  const cooldown = 5 * 60 * 1000; // 5 min cooldown
+  const lastPlayed = parseInt(localStorage.getItem('er_last_memory')) || 0;
+  const cooldown = 5 * 60 * 1000;
 
-  if (lastPlayed && (now - lastPlayed) < cooldown) return;
+  if (lastPlayed && (now - lastPlayed) < cooldown) {
+    alert('⏳ Memory match is cooling down!');
+    checkMemoryTimer();
+    return;
+  }
 
   flippedIndices = [];
   matchedPairs = 0;
@@ -238,10 +292,11 @@ function handleMemoryClick(index) {
       if (matchedPairs === 4) {
         setTimeout(() => {
           balance += 50;
-          localStorage.setItem('er_last_memory', Date.now());
+          localStorage.setItem('er_last_memory', Date.now().toString());
           updateDisplay();
           alert('🎉 Spooky Pairs Cleared! +50 Soul Candies added!');
           isMemoryActive = false;
+          checkMemoryTimer();
         }, 300);
       }
     } else {
@@ -274,7 +329,7 @@ function shuffleUnmatchedCards() {
 }
 
 function checkMemoryTimer() {
-  const lastPlayed = localStorage.getItem('er_last_memory');
+  const lastPlayed = parseInt(localStorage.getItem('er_last_memory')) || 0;
   const btn = document.getElementById('memoryBtn');
   const timerText = document.getElementById('memoryTimerText');
   if (!btn || !timerText) return;
@@ -340,7 +395,7 @@ function scheduleNextGhost() {
 }
 
 // ==========================================
-// 🛒 SHOP & WEBHOOK PURCHASE LOGGING
+// 🛒 SHOP & WEBHOOK LOGGING
 // ==========================================
 function startPurchase(name, cost) {
   if (balance < cost) {
@@ -395,38 +450,6 @@ function confirmRedeem() {
   document.getElementById('voucherModal').classList.add('active');
 }
 
-// ==========================================
-// 🎁 PROMO CODE
-// ==========================================
-function redeemPromo() {
-  const input = document.getElementById('promoInput');
-  const msg = document.getElementById('promoMsg');
-  if (!input || !msg) return;
-
-  const code = input.value.trim().toUpperCase();
-  const redeemed = JSON.parse(localStorage.getItem('er_redeemed_promos') || '[]');
-
-  if (redeemed.includes(code)) {
-    msg.style.color = '#ef4444';
-    msg.innerText = 'Code already redeemed!';
-    return;
-  }
-
-  if (testPromoCodes[code]) {
-    const reward = testPromoCodes[code];
-    balance += reward;
-    redeemed.push(code);
-    localStorage.setItem('er_redeemed_promos', JSON.stringify(redeemed));
-    updateDisplay();
-    msg.style.color = '#22c55e';
-    msg.innerText = `+${reward} Candies added!`;
-    input.value = '';
-  } else {
-    msg.style.color = '#ef4444';
-    msg.innerText = 'Invalid secret code!';
-  }
-}
-
 function closeModal(id) {
   const el = document.getElementById(id);
   if (el) el.classList.remove('active');
@@ -442,4 +465,4 @@ window.addEventListener('DOMContentLoaded', () => {
     checkMemoryTimer();
   }, 1000);
 });
-    
+                            
