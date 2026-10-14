@@ -3,172 +3,104 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ethereal Radiance | Official Community Hub</title>
+  <title>Halloween Vault | Ethereal Radiance</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+  <div id="spookyGhost" onclick="catchGhost()">👻</div>
+
   <div class="wrapper">
-    <!-- Navbar -->
     <nav>
-      <a href="index.html" class="brand">
-        <div class="brand-icon">✦</div>
-        <div class="brand-title">ETHEREAL RADIANCE</div>
+      <a href="index.html" class="brand-area">
+        <span class="pumpkin-icon">🎃</span>
+        <div class="brand-title">ETHEREAL VAULT</div>
       </a>
-
       <div class="nav-links">
-        <a href="index.html" class="nav-link active">Home</a>
-        <a href="aotr.html" class="nav-link">AOT:R</a>
-        <a href="bloxfruits.html" class="nav-link">Blox Fruits</a>
-        <a href="slayer2.html" class="nav-link">Slayers 2</a>
-        <a href="about.html" class="nav-link">About Us</a>
+        <a href="index.html" class="nav-link active">Games</a>
+        <a href="shop.html" class="nav-link">Shop</a>
+        <a href="events.html" class="nav-link">Events</a>
       </div>
-
-      <a href="https://discord.gg/2vvDxJYGn" target="_blank" class="nav-cta">JOIN DISCORD</a>
+      <div class="coin-badge">
+        <span>🍬 Candies:</span>
+        <span class="coin-amount" id="coinBalance">0</span>
+      </div>
     </nav>
 
-    <!-- Bento Hero -->
-    <!-- Halloween Animated Button -->
-<div style="margin: 1.5rem 0; text-align: center;">
-  <a href="https://etherealhalloween.vercel.app/" class="spooky-animated-btn" target="_blank">
-    <span class="btn-text">🎃 PLAY HALLOWEEN GAMES ➔</span>
-  </a>
-</div>
-
-    <div class="hero-bento">
-      <div class="card hero-content">
-        <div class="hero-tag"><span></span> Official Sanctuary</div>
-        <h1 class="hero-title">Dominating The Realm</h1>
-        <p class="hero-desc">
-          Ethereal Radiance brings elite Roblox warriors together under one banner. Experience top-tier AOT:R speedruns, active Blox Fruits trading, and coordinated Slayers 2 boss raids.
-        </p>
-
-        <div class="btn-row">
-          <button class="btn-primary" onclick="openModal('rulesModal')">† Server Rules †</button>
-          <a href="https://discord.gg/2vvDxJYGn" target="_blank" class="btn-glass">Join Discord (500+)</a>
-        </div>
-      </div>
-
-      <div class="card hero-visual">
-        <img src="aotr.jpg" alt="AOT:R Preview" class="hero-img">
-        <div class="hero-gradient"></div>
-        <div class="visual-footer">
-          <div>
-            <div class="visual-badge-title">AOT: Revolution</div>
-            <div class="visual-badge-sub">Primary Vanguard Division</div>
+    <!-- Mini-Games Grid -->
+    <div class="grid-2">
+      <!-- Mini-Game 1: Wheel of Souls -->
+      <div class="card" style="text-align: center;">
+        <span class="tag">MINI-GAME</span>
+        <h2>Lucky Wheel of Souls</h2>
+        <p>Spin the cursed wheel to claim random candies (Up to 150 Jackpot!). Available every 10 minutes.</p>
+        
+        <div class="wheel-container">
+          <div class="wheel-arrow"></div>
+          <div class="wheel-box" id="wheelBox">
+            <div class="wheel-text" style="--i: 0;">0</div>
+            <div class="wheel-text" style="--i: 1;">15</div>
+            <div class="wheel-text" style="--i: 2;">30</div>
+            <div class="wheel-text" style="--i: 3;">50</div>
+            <div class="wheel-text" style="--i: 4;">75</div>
+            <div class="wheel-text" style="--i: 5;">100</div>
+            <div class="wheel-text" style="--i: 6;">125</div>
+            <div class="wheel-text" style="--i: 7;">150</div>
+            <div class="wheel-center-orb">💀</div>
           </div>
-          <span style="font-size: 0.78rem; font-weight: 600; color: #a4b0c6;">ACTIVE HUB</span>
+          <button id="spinBtn" class="btn btn-pumpkin" onclick="spinWheel()">Spin Wheel 🌀</button>
+          <p id="spinTimerText" style="font-size: 0.75rem; color: #ff9d42; margin-top: 5px;"></p>
         </div>
+      </div>
+
+      <!-- Mini-Game 2: Spooky Memory Card Match -->
+      <div class="card" style="text-align: center;">
+        <span class="tag" style="color: var(--phantom); border-color: rgba(168,85,247,0.3); background: rgba(168,85,247,0.1);">NEW GAME</span>
+        <h2>Spooky Card Match</h2>
+        <p>Match all 4 spooky pairs to win 50 bonus candies! Playable every 5 minutes.</p>
+
+        <div class="memory-grid" id="memoryGrid">
+          <!-- Cards rendered by script.js -->
+        </div>
+
+        <button id="memoryBtn" class="btn btn-pumpkin" onclick="initMemoryGame()">Start Match 🃏</button>
+        <p id="memoryTimerText" style="font-size: 0.75rem; color: #ff9d42; margin-top: 5px;"></p>
       </div>
     </div>
 
-    <!-- Feature Bento Grid -->
-    <div class="bottom-bento">
-      <div class="card feature-card">
-        <div class="feature-head">
-          <span style="font-size: 1.4rem;">🛡️</span>
-          <span class="feature-badge">COMMUNITY</span>
+    <!-- Daily Harvest & Secret Codes -->
+    <div class="card">
+      <div class="grid-2" style="align-items: center;">
+        <div>
+          <span class="tag">DAILY HARVEST</span>
+          <h2>Trick or Treat Chest</h2>
+          <p>Collect your free 100 daily harvest candies to exchange for official MistCoins and exclusive roles.</p>
+          <button id="dailyBtn" class="btn btn-pumpkin" style="margin-top: 0.8rem;" onclick="claimDaily()">Harvest 100 🍬</button>
+          <p id="timerText" style="margin-top: 8px; font-size: 0.75rem; color: #ff9d42;"></p>
         </div>
-        <h3 class="feature-title">Verified Trading</h3>
-        <p class="feature-desc">Dedicated trade middlemen and anti-scam measures across AOT:R, Blox Fruits, and Slayers 2.</p>
-      </div>
 
-      <div class="card feature-card">
-        <div class="feature-head">
-          <span style="font-size: 1.4rem;">🎁</span>
-          <span class="feature-badge">WEEKLY</span>
+        <div style="border-left: 1px solid rgba(255,255,255,0.08); padding-left: 1.2rem;">
+          <span class="tag" style="color: var(--phantom); border-color: rgba(168,85,247,0.3); background: rgba(168,85,247,0.1);">SECRET DROP</span>
+          <h3 style="font-family: 'Cinzel'; margin-bottom: 4px;">Redeem Discord Code</h3>
+          <p>Enter promo drops from announcements:</p>
+          <div class="promo-box">
+            <input type="text" id="promoInput" class="promo-input" placeholder="Get it on Discord">
+            <button class="btn-phantom" onclick="redeemPromo()">Redeem</button>
+          </div>
+          <p id="promoMsg" style="margin-top: 6px; font-size: 0.75rem;"></p>
         </div>
-        <h3 class="feature-title">Server Giveaways</h3>
-        <p class="feature-desc">Regular community rewards, spins, passes, fruits, and Discord Nitro for loyal guild members.</p>
-      </div>
-
-      <div class="card feature-card">
-        <div class="feature-head">
-          <span style="font-size: 1.4rem;">⚔️</span>
-          <span class="feature-badge">EVENTS</span>
-        </div>
-        <h3 class="feature-title">Raids & Squads</h3>
-        <p class="feature-desc">Organized parties 24/7 for fast dungeon clears, Levi raids, sea beasts, and boss rushes.</p>
-      </div>
-    </div>
-
-    <!-- Leadership Row -->
-    <div class="staff-row">
-      <div class="card staff-box">
-        <div class="staff-info">
-          <div class="staff-role">Guild Founder / Owner</div>
-          <div class="staff-name">Misty | Mist Hashira</div>
-        </div>
-        <div class="staff-avatar">👑</div>
-      </div>
-
-      <div class="card staff-box">
-        <div class="staff-info">
-          <div class="staff-role">Head Staff / Web Developer</div>
-          <div class="staff-name">Mikey</div>
-        </div>
-        <div class="staff-avatar">💻</div>
       </div>
     </div>
 
     <footer>
-      <p>© 2026 Ethereal Radiance. All rights reserved.</p>
-      <p style="margin-top: 6px;">Engineered with precision by <strong>Mikey's Studio</strong></p>
+      <p>© 2026 Ethereal Radiance. Engineered by <strong>Mikey's Studio</strong></p>
     </footer>
   </div>
 
-  <!-- General Rules Modal -->
-  <div class="modal-overlay" id="rulesModal">
-    <div class="modal-box">
-      <div class="modal-header">
-        <div class="modal-title">Official Server Rules</div>
-        <button class="modal-close" onclick="closeModal('rulesModal')">&times;</button>
-      </div>
-      
-      <div class="rule-sec">
-        <div class="rule-title">General Conduct</div>
-        <ul class="rule-list">
-          <li><span>»</span> Respect all members.</li>
-          <li><span>»</span> No harassment or discrimination.</li>
-          <li><span>»</span> Avoid unnecessary drama.</li>
-        </ul>
-      </div>
-
-      <div class="rule-sec">
-        <div class="rule-title">No Spam & Content</div>
-        <ul class="rule-list">
-          <li><span>»</span> No message flooding or excessive caps/emojis.</li>
-          <li><span>»</span> No spam pings.</li>
-          <li><span>»</span> Keep content appropriate (No NSFW).</li>
-          <li><span>»</span> Follow Discord Terms of Service.</li>
-        </ul>
-      </div>
-
-      <div class="rule-sec">
-        <div class="rule-title">Server Etiquette & Safety</div>
-        <ul class="rule-list">
-          <li><span>»</span> No unauthorized advertising or unsolicited DM ads.</li>
-          <li><span>»</span> No @everyone / @here abuse.</li>
-          <li><span>»</span> Respect staff instructions and moderation.</li>
-          <li><span>»</span> No scams, fraud, or impersonation. Keep trades honest.</li>
-          <li><span>»</span> Do not leak personal info or share private messages without permission.</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    function openModal(id) { document.getElementById(id).classList.add('active'); }
-    function closeModal(id) { document.getElementById(id).classList.remove('active'); }
-    window.onclick = function(e) {
-      if (e.target.classList.contains('modal-overlay')) {
-        closeModal('rulesModal');
-      }
-    };
-  </script>
+  <script src="script.js"></script>
 </body>
-  </html>
-  
+              </html>
+            
