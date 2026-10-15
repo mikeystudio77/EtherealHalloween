@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Soul Shop | Ethereal Radiance</title>
+  <meta name="description" content="Spend Soul Candies on MistCoins, Halloween roles and giveaway perks.">
+  <meta name="theme-color" content="#07050a">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🎃%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-page="shop">
+  <div class="wrapper">
+    <header id="site-nav"></header>
+
+    <main style="display:flex;flex-direction:column;gap:1.3rem">
+      <section class="card">
+        <span class="tag">Official Mistbot exchange</span>
+        <h2>Halloween Mistbot Shop</h2>
+        <p>Convert Soul Candies into <strong>MistCoins</strong> (500 candies = 25 MistCoins) or unlock permanent Halloween roles and giveaway perks. Every purchase creates a verified log for staff, and you get a ticket code to claim your reward in Discord.</p>
+      </section>
+
+      <section class="grid-3" id="shopGrid" aria-label="Shop items"></section>
+    </main>
+
+    <footer id="site-footer"></footer>
+  </div>
+
+  <!-- Confirm purchase -->
+  <div class="modal-overlay" id="buyModal" role="dialog" aria-modal="true" aria-labelledby="buyTitle">
+    <div class="modal-box">
+      <h2 id="buyTitle" style="font-size:1.25rem">Confirm purchase</h2>
+      <p id="buyItemDesc"></p>
+      <label for="discordUser">Your Discord username</label>
+      <input id="discordUser" class="input" type="text" placeholder="e.g. Mikey_77" maxlength="32" autocomplete="off">
+      <div class="modal-actions">
+        <button id="confirmBtn" class="btn btn-pumpkin" type="button">Confirm purchase</button>
+        <button class="btn btn-ghost" type="button" data-close="buyModal">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ticket code -->
+  <div class="modal-overlay" id="voucherModal" role="dialog" aria-modal="true" aria-labelledby="voucherTitle">
+    <div class="modal-box">
+      <h2 id="voucherTitle" style="font-size:1.3rem">🎉 Purchase logged!</h2>
+      <p id="claimedItemName" style="margin-top:6px"></p>
+      <p style="margin-top:10px;font-size:0.8rem">Open a Discord ticket and send this code to staff to claim your reward. Don't share it with anyone else.</p>
+      <div class="voucher-code" id="voucherCodeText">ER-USER-XXXX</div>
+      <div class="modal-actions">
+        <button id="copyBtn" class="btn btn-pumpkin" type="button">Copy code</button>
+        <button class="btn btn-ghost" type="button" data-close="voucherModal">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

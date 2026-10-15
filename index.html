@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Halloween Vault | Ethereal Radiance</title>
+  <meta name="description" content="Play Halloween mini-games, collect Soul Candies and redeem them for roles and MistCoins in the Ethereal Radiance Discord.">
+  <meta name="theme-color" content="#07050a">
+  <meta property="og:title" content="Halloween Vault | Ethereal Radiance">
+  <meta property="og:description" content="Play. Earn candies. Redeem rewards in Discord.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🎃%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-page="games">
+  <div class="wrapper">
+    <header id="site-nav"></header>
+
+    <main style="display:flex;flex-direction:column;gap:1.3rem">
+      <section class="card hero">
+        <span class="tag">Halloween 2026</span>
+        <h1>Play. Earn. Redeem.</h1>
+        <p>Collect Soul Candies from mini-games, then spend them in the shop for MistCoins and exclusive roles in our Discord.</p>
+        <div class="steps">
+          <div class="step"><b>1 · Play</b><p>Spin, match cards and harvest daily.</p></div>
+          <div class="step"><b>2 · Redeem</b><p>Spend candies in the Shop to get a ticket code.</p></div>
+          <div class="step"><b>3 · Claim</b><p>Send the code to staff in a Discord ticket.</p></div>
+        </div>
+      </section>
+
+      <section class="grid-2" aria-label="Mini-games">
+        <article class="card center">
+          <span class="tag">Mini-game</span>
+          <h2>Lucky Wheel of Souls</h2>
+          <p>Spin for up to 150 candies. Available every 10 minutes.</p>
+          <div class="wheel-container">
+            <div class="wheel-arrow"></div>
+            <div class="wheel-box" id="wheelBox" aria-hidden="true">
+              <div class="wheel-text" style="--i:0">0</div>
+              <div class="wheel-text" style="--i:1">15</div>
+              <div class="wheel-text" style="--i:2">30</div>
+              <div class="wheel-text" style="--i:3">50</div>
+              <div class="wheel-text" style="--i:4">75</div>
+              <div class="wheel-text" style="--i:5">100</div>
+              <div class="wheel-text" style="--i:6">125</div>
+              <div class="wheel-text" style="--i:7">150</div>
+              <div class="wheel-center-orb">💀</div>
+            </div>
+            <button id="spinBtn" class="btn btn-pumpkin" type="button" disabled>Spin the Wheel 🌀</button>
+            <p id="spinTimer" class="hint" aria-live="polite"></p>
+          </div>
+        </article>
+
+        <article class="card center">
+          <span class="tag purple">Mini-game</span>
+          <h2>Spooky Card Match</h2>
+          <p>Match all 4 pairs to win 50 candies. Cards reshuffle after every miss! Playable every 5 minutes.</p>
+          <div class="memory-grid" id="memoryGrid" aria-label="Memory cards"></div>
+          <button id="memoryBtn" class="btn btn-pumpkin" type="button" disabled>Start Match 🃏</button>
+          <p id="memoryTimer" class="hint" aria-live="polite"></p>
+        </article>
+      </section>
+
+      <section class="card">
+        <div class="grid-2" style="align-items:center">
+          <div>
+            <span class="tag">Daily harvest</span>
+            <h2>Trick or Treat Chest</h2>
+            <p>Collect 100 free candies every 24 hours.</p>
+            <button id="dailyBtn" class="btn btn-pumpkin" type="button" style="margin-top:0.9rem" disabled>Harvest 100 🍬</button>
+            <p id="dailyTimer" class="hint" aria-live="polite"></p>
+          </div>
+          <div class="divider">
+            <span class="tag purple">Secret drop</span>
+            <h3>Redeem a Discord code</h3>
+            <p>Enter promo codes announced in our server.</p>
+            <div class="field">
+              <input id="promoInput" class="input" type="text" placeholder="Enter code" autocomplete="off" maxlength="40" aria-label="Promo code">
+              <button id="promoBtn" class="btn btn-phantom" type="button">Redeem</button>
+            </div>
+            <p id="promoMsg" class="msg" aria-live="polite"></p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer id="site-footer"></footer>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
